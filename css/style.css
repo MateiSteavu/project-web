@@ -1,8 +1,8 @@
 :root{
     --primary-color: red;
     --secondary-color: green;
-    --background-color: black;
-    --text-color: yellow;
+    --background-color: white;
+    --text-color: black;
 
     --schema: --primary-color;
 }
