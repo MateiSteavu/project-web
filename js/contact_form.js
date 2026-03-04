@@ -45,3 +45,11 @@ form.addEventListener('submit', function(event) {
 
     console.warn("Goodbye World!");
 });
+
+const ceva = document.querySelectorAll('main h2');
+ceva.forEach(function(h2){h2.addEventListener('click', function(event){
+    const smh = h2.nextElementSibling;
+    if(smh){
+        smh.classList.toggle('hidden');
+    }
+})});

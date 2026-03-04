@@ -7,6 +7,8 @@
     --schema: --primary-color;
 }
 
+.hidden { display: none; }
+
 body.dark-mode {
  --background-color: #1a1a2e;
  --text-color: #e0e0e0;
