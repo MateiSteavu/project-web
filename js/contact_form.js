@@ -11,6 +11,10 @@ else
     else{
         my_text.textContent = 'Bună seara! Bine ai venit pe pagina mea.';
     }
+const dark_mode = document.getElementById('Dark');
+dark_mode.addEventListener('click', function(event){
+    document.body.classList.toggle('dark-mode');
+});
 
 
 const form = document.querySelector('form');

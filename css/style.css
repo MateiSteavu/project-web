@@ -7,6 +7,12 @@
     --schema: --primary-color;
 }
 
+body.dark-mode {
+ --background-color: #1a1a2e;
+ --text-color: #e0e0e0;
+ /* Ce alte elemente trebuie schimbate? Ganditi-va! */
+}
+
 * {
     box-sizing: border-box;
     margin: 10px 7px 4px 5px;
