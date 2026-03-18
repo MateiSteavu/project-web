@@ -25,6 +25,11 @@ function App() {
         })}
         <p>Ai apasat de {count} ori</p>
         <button onClick={() => setCount(count + 1)}>Click</button>
+        <br></br>
+        <button onClick={() => setCount(count - 1)}>-1</button>
+        <br></br>
+        <button onClick={() => setCount(0)}>Reset</button>
+
         </div>
     );
 }
