@@ -1,4 +1,6 @@
 import Card from './Card';
+import { useState } from 'react';
+
 
 const projects = [
   { title: "Proiect 1", description: "Pagina personala" },
@@ -10,6 +12,7 @@ const projects = [
 // In JSX-ul returnat de App:
 
 function App() {
+  const [count, setCount] = useState(0);
     return (
         <div>
         <h1>Dashboard</h1>
@@ -20,6 +23,8 @@ function App() {
         {projects.map(function(item, index) {
           return <Card key={index} title={item.title} description={item.description} />;
         })}
+        <p>Ai apasat de {count} ori</p>
+        <button onClick={() => setCount(count + 1)}>Click</button>
         </div>
     );
 }
