@@ -3,6 +3,7 @@ import QuickNote from './QuickNote';
 import { useState } from 'react';
 import TodoList from './ToDo';
 import ContactForm from './ContactForm';
+import Clock from './Clock';
 
 
 const projects = [
@@ -35,6 +36,7 @@ function App() {
         <QuickNote />
         <TodoList />
         <ContactForm />
+        <Clock />
         </div>
     );
 }
