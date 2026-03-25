@@ -1,6 +1,7 @@
 import Card from './Card';
 import QuickNote from './QuickNote';
 import { useState } from 'react';
+import TodoList from './ToDo';
 
 
 const projects = [
@@ -31,6 +32,7 @@ function App() {
         <br></br>
         <button onClick={() => setCount(0)}>Reset</button>
         <QuickNote />
+        <TodoList />
         </div>
     );
 }
