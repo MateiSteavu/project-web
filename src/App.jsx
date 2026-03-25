@@ -2,6 +2,7 @@ import Card from './Card';
 import QuickNote from './QuickNote';
 import { useState } from 'react';
 import TodoList from './ToDo';
+import ContactForm from './ContactForm';
 
 
 const projects = [
@@ -33,6 +34,7 @@ function App() {
         <button onClick={() => setCount(0)}>Reset</button>
         <QuickNote />
         <TodoList />
+        <ContactForm />
         </div>
     );
 }
