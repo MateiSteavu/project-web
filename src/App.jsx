@@ -1,4 +1,5 @@
 import Card from './Card';
+import QuickNote from './QuickNote';
 import { useState } from 'react';
 
 
@@ -29,7 +30,7 @@ function App() {
         <button onClick={() => setCount(count - 1)}>-1</button>
         <br></br>
         <button onClick={() => setCount(0)}>Reset</button>
-
+        <QuickNote />
         </div>
     );
 }
