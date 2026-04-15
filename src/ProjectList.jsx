@@ -7,19 +7,22 @@ function ProjectList() {
     const [error, setError] = useState(null)
     const [search] = useState('Pagina Personala');
     useEffect(function() {
-        fetch('/data/projects.json')
+        fetch('/data/project.json')
             .then(function(response) {
                 return response.json();
             })
             .then(function(data) {
                 setProjects(data.projects);
                 setLoading(false);
-            }).catch(function(err) {
+            })
+            .catch(function(err) {
             setError('Eroare la incarcarea datelor' + err);
             setLoading(false);
             });
     }, []);
-    if(error);
+    if(error) {
+        return(<p>Error is: {error}</p>);
+    }
     if (loading) {
         
         return <p>Se incarca...</p>;
@@ -33,6 +36,9 @@ function ProjectList() {
             .map(function(item, index) {
           return <Card key={index} title={item.title} description={item.tech} />;
         })}
+        <p>{projects.length}</p>
+        <p>{projects.filter(p => p.done).length}</p>
+        <p>{projects.filter(p => !p.done).length}</p>
         </div>
     );
 }
