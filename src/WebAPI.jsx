@@ -1,18 +1,18 @@
 import Card from './Card';
 
 import { useState, useEffect } from 'react';
-function ProjectList() {
+function WebAPI() {
     const [projects, setProjects] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null)
     const [search, setSearch] = useState('');
     useEffect(function() {
-        fetch('/data/projects.json')
+        fetch('https://jsonplaceholder.typicode.com/users')
             .then(function(response) {
                 return response.json();
             })
             .then(function(data) {
-                setProjects(data.projects);
+                setProjects(data);
                 setLoading(false);
             })
             .catch(function(err) {
@@ -30,21 +30,17 @@ function ProjectList() {
     return (
         <div>
         <h3>Proiecte</h3>
-
         <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
         />
         {projects.filter(function(p) {
-            return p.title.toLowerCase().includes(search.toLowerCase());
+            return p.name.toLowerCase().includes(search.toLowerCase());
             })
             .map(function(item, index) {
-          return <Card key={index} title={item.title} description={item.tech} />;
+          return <Card key={index} title={item.name} description={item.username} />;
         })}
-        <p>{projects.length}</p>
-        <p>{projects.filter(p => p.done).length}</p>
-        <p>{projects.filter(p => !p.done).length}</p>
         </div>
     );
 }
-export default ProjectList;
+export default WebAPI;

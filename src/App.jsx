@@ -5,6 +5,7 @@ import TodoList from './ToDo';
 import ContactForm from './ContactForm';
 import Clock from './Clock';
 import ProjectList from './ProjectList';
+import WebAPI from './WebAPI';
 
 
 const projects = [
@@ -39,6 +40,7 @@ function App() {
         <ContactForm />
         <Clock />
         <ProjectList />
+        <WebAPI />
         </div>
     );
 }
