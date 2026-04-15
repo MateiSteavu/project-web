@@ -4,6 +4,7 @@ import { useState } from 'react';
 import TodoList from './ToDo';
 import ContactForm from './ContactForm';
 import Clock from './Clock';
+import ProjectList from './ProjectList';
 
 
 const projects = [
@@ -37,6 +38,7 @@ function App() {
         <TodoList />
         <ContactForm />
         <Clock />
+        <ProjectList />
         </div>
     );
 }
