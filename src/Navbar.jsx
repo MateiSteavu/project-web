@@ -8,6 +8,7 @@ function Navbar() {
         <br></br>
         <NavLink to="/contact">Contact</NavLink>
         <br></br>
+        <NavLink to="/about">About</NavLink>
         </nav>
     );
 }
