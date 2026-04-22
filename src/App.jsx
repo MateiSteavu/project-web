@@ -5,6 +5,7 @@ import Contact from './pages/Contact';
 import Navbar from './Navbar';
 import NotFound from './pages/NotFound';
 import About from './pages/About';
+import Footer from './Footer';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
      <Route path="/about" element={<About />} />
     <Route path="*" element={<NotFound />} />
     </Routes>
+    <Footer />
     </BrowserRouter>
   );
 }
