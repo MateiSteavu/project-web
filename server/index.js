@@ -40,10 +40,22 @@ app.get('/api/stats', function(req, res) {
 app.delete('/api/projects/:id', function(req, res) {
     const id = parseInt(req.params.id)
     const my_index = projects.findIndex(p => p.id === id)
-    console.log("My_index: " + my_index);
     if (my_index !== null) {
         projects.splice(my_index, 1);
         res.json({ message: 'Deleted' })
+    }
+    else
+        res.status(404).json({ error: 'Not found' })
+})
+
+app.put('/api/projects/:id', function(req, res) {
+    const id = parseInt(req.params.id)
+    const my_index = projects.findIndex(p => p.id === id)
+    if (my_index !== null) {
+        projects[my_index].title = req.body.title;
+        projects[my_index].tech = req.body.tech;
+        projects[my_index].done = req.body.done;
+        res.json({ message: projects[my_index] })
     }
     else
         res.status(404).json({ error: 'Not found' })
