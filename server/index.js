@@ -2,6 +2,15 @@ const express = require('express');
 const app = express();
 const PORT = 3000;
 
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/dashboard')
+ .then(function() {
+ console.log('Conectat la MongoDB!');
+ })
+ .catch(function(err) {
+ console.error('Eroare conectare MongoDB:', err);
+ });
+
 app.use(express.json());
 // Prima ruta: raspunde la GET /
 app.get('/', function(req, res) {
