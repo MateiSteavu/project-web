@@ -28,23 +28,25 @@ function ProjectList() {
     }
 
     function handleDelete(projectId) {
-        fetch('http://localhost:3000/api/projects/' + projectId, {
-            method: 'DELETE'
-        })
-        .then(function (response) {
-            if (!response.ok) {
-                throw new Error('Delete failed');
-            }
-            setProjects(function (prevProjects) {
-                return prevProjects.filter(function (project) {
-                    return project._id !== projectId;
+        if (window.confirm('Sigur doriti sa stergeti acest proiect?')) {
+            fetch('http://localhost:3000/api/projects/' + projectId, {
+                method: 'DELETE'
+            })
+            .then(function (response) {
+                if (!response.ok) {
+                    throw new Error('Delete failed');
+                }
+                setProjects(function (prevProjects) {
+                    return prevProjects.filter(function (project) {
+                        return project._id !== projectId;
+                    });
                 });
+            })
+            .catch(function (err) {
+                setError('Error deleting project');
+                console.error('Error deleting project:', err);
             });
-        })
-        .catch(function (err) {
-            setError('Error deleting project');
-            console.error('Error deleting project:', err);
-        });
+        }
     }
 
     //-----------------------------
