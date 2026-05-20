@@ -43,14 +43,12 @@ app.get('/api/projects/:id',async function(req, res) {
 });
 
 app.delete('/api/projects/:id', async function(req, res) {
-    const projects = await Project.find();
-    const my_index = await Project.findById(req.params.id)
-    if (my_index !== null) {
-        projects.splice(my_index, 1);
-        res.json({ message: 'Deleted' })
+    const project = await Project.findByIdAndDelete(req.params.id);
+    if (!project) {
+        res.status(404).json({ error: 'Not found' });
     }
     else
-        res.status(404).json({ error: 'Not found' })
+        res.json({ message: 'Deleted' });
 })
 
 // POST /api/projects - adauga un proiect nou
@@ -63,6 +61,20 @@ app.post('/api/projects', async function(req, res) {
  });
  const saved = await newProject.save();
  res.status(201).json(saved);
+ } catch (err) {
+ res.status(400).json({ error: err.message });
+ }
+});
+
+app.put('/api/projects/:id', async function(req, res) {
+ try {
+ const updated = await Project.findByIdAndUpdate(
+ req.params.id,
+ req.body,
+ { new: true } // returneaza documentul DUPA actualizare
+ );
+ if (!updated) return res.status(404).json({ error: 'Not found' });
+ res.json(updated);
  } catch (err) {
  res.status(400).json({ error: err.message });
  }
