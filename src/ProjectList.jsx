@@ -28,7 +28,6 @@ function ProjectList() {
     }
 
     function handleDelete(projectId) {
-
         fetch('http://localhost:3000/api/projects/' + projectId, {
             method: 'DELETE'
         })
@@ -45,6 +44,22 @@ function ProjectList() {
         .catch(function (err) {
             setError('Error deleting project');
             console.error('Error deleting project:', err);
+        });
+    }
+
+    //-----------------------------
+    function handleToggle(id, currentDone) {
+        fetch('http://localhost:3000/api/projects/' + id, {
+            method: 'PUT',
+            body:  { done: !currentDone }
+        })
+        .then(async function (response) {
+             const updatedProject = await response.json();
+             setProjects(projects.map(p => p._id === id ? updatedProject : p))
+        })
+        .catch(function (err) {
+            setError('Cannot find project I guess');
+            console.error('Something happened', err);
         });
     }
 
@@ -104,12 +119,12 @@ function ProjectList() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
         />
-        {projects.filter(function(p) {
+        {/* {projects.filter(function(p) {
             return p.title.toLowerCase().includes(search.toLowerCase());
             })
             .map(function(item, index) {
           return <Card key={index} title={item.title} description={item.tech} />;
-        })}
+        })} */}
         {projects.filter(item => item.title.toLowerCase().includes(search.toLowerCase())).map(function (project) {
             return <div key={project._id} className="project-item">
                 <Card
@@ -122,6 +137,12 @@ function ProjectList() {
                 onClick={() => handleDelete(project._id)}
                 >
                 Delete
+                </button>
+                <button
+                type="button"
+                onClick={() => handleToggle(project._id, false)}
+                >
+                Toggle
                 </button>
                 </div>})
         }

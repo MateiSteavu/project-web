@@ -67,17 +67,17 @@ app.post('/api/projects', async function(req, res) {
 });
 
 app.put('/api/projects/:id', async function(req, res) {
- try {
- const updated = await Project.findByIdAndUpdate(
- req.params.id,
- req.body,
- { new: true } // returneaza documentul DUPA actualizare
- );
- if (!updated) return res.status(404).json({ error: 'Not found' });
- res.json(updated);
- } catch (err) {
- res.status(400).json({ error: err.message });
- }
+    try {
+        const updated = await Project.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        { new: true } // returneaza documentul DUPA actualizare
+        );
+        if (!updated) return res.status(404).json({ error: 'Not found' });
+        res.json(updated);
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
 });
 
 // Porneste serverul
