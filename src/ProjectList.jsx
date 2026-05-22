@@ -1,4 +1,3 @@
-import Card from './Card';
 import { useState, useEffect } from 'react';
 
 function ProjectList() {
@@ -11,12 +10,12 @@ function ProjectList() {
     const [tech, setTech] = useState('');
     const [description, setDescription] = useState('');
 
-    // --- State-uri pentru editare ---
     const [editingId, setEditingId] = useState(null);
     const [editTitle, setEditTitle] = useState('');
     const [editTech, setEditTech] = useState('');
 
-    async function handleSubmit() {
+    async function handleSubmit(e) {
+        e.preventDefault();
         try {
             const response = await fetch('http://localhost:3000/api/projects', {
                 method: 'POST',
@@ -35,9 +34,7 @@ function ProjectList() {
 
     function handleDelete(projectId) {
         if (window.confirm('Sigur doriti sa stergeti acest proiect?')) {
-            fetch('http://localhost:3000/api/projects/' + projectId, {
-                method: 'DELETE',
-            })
+            fetch('http://localhost:3000/api/projects/' + projectId, { method: 'DELETE' })
                 .then(function (response) {
                     if (!response.ok) throw new Error('Delete failed');
                     setProjects((prev) => prev.filter((p) => p._id !== projectId));
@@ -60,19 +57,17 @@ function ProjectList() {
                 setProjects(projects.map((p) => (p._id === id ? updatedProject : p)));
             })
             .catch(function (err) {
-                setError('Cannot find project I guess');
+                setError('Cannot find project');
                 console.error('Something happened', err);
             });
     }
 
-    // --- Deschide formularul de editare ---
     function handleEdit(project) {
         setEditingId(project._id);
         setEditTitle(project.title);
         setEditTech(project.tech);
     }
 
-    // --- Salvează modificările ---
     async function handleSave(id) {
         try {
             const response = await fetch('http://localhost:3000/api/projects/' + id, {
@@ -89,7 +84,6 @@ function ProjectList() {
         }
     }
 
-    // --- Anulează editarea ---
     function handleCancel() {
         setEditingId(null);
     }
@@ -107,97 +101,118 @@ function ProjectList() {
             });
     }, []);
 
-    if (error) return <p>Error is: {error}</p>;
-    if (loading) return <p>Se incarca...</p>;
+    if (error) return <p>Eroare: {error}</p>;
+    if (loading) return <p>Se încarcă...</p>;
 
     return (
-        <div>
-            <h3>Proiecte</h3>
+        <div className="projects-page">
+            <p className="page-label">Proiecte</p>
+            <h1>Proiectele mele</h1>
 
             <form className="project-form" onSubmit={handleSubmit}>
                 <div className="project-form-fields">
                     <input
-                        className="todo-list-input"
-                        placeholder="Project title"
+                        placeholder="Titlu proiect"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
                     />
                     <input
-                        className="todo-list-input"
-                        placeholder="Tech"
+                        placeholder="Tehnologie"
                         value={tech}
                         onChange={(e) => setTech(e.target.value)}
                     />
                     <textarea
-                        className="todo-list-input project-description-input"
-                        placeholder="Description"
+                        placeholder="Descriere"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                         rows={3}
                     />
                 </div>
-                <button type="submit" className="todo-list-add-button">
-                    Add
+                <button type="submit" className="btn-primary">
+                    Adaugă
                 </button>
             </form>
 
-            <input value={search} onChange={(e) => setSearch(e.target.value)} />
+            <div className="section-head">Toate proiectele</div>
 
-            {projects
-                .filter((item) =>
-                    item.title.toLowerCase().includes(search.toLowerCase())
-                )
+            <input
+                className="search-input"
+                placeholder="Search"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+            />
+
+            <div className="project-list">
+              {projects
+                .filter((item) => item.title.toLowerCase().includes(search.toLowerCase()))
                 .map(function (project) {
-                    // Dacă acest proiect e în editare, afișăm formularul
+
                     if (editingId === project._id) {
                         return (
                             <div key={project._id} className="project-item">
-                                <input
-                                    className="todo-list-input"
-                                    value={editTitle}
-                                    onChange={(e) => setEditTitle(e.target.value)}
-                                    placeholder="Title"
-                                />
-                                <input
-                                    className="todo-list-input"
-                                    value={editTech}
-                                    onChange={(e) => setEditTech(e.target.value)}
-                                    placeholder="Tech"
-                                />
-                                <button type="button" onClick={() => handleSave(project._id)}>
-                                    Salvează
-                                </button>
-                                <button type="button" onClick={handleCancel}>
-                                    Anulează
-                                </button>
+                                <div style={{ display: 'flex', gap: '8px', flex: 1 }}>
+                                    <input
+                                        value={editTitle}
+                                        onChange={(e) => setEditTitle(e.target.value)}
+                                        placeholder="Titlu"
+                                    />
+                                    <input
+                                        value={editTech}
+                                        onChange={(e) => setEditTech(e.target.value)}
+                                        placeholder="Tehnologie"
+                                    />
+                                </div>
+                                <div style={{ display: 'flex', gap: '6px' }}>
+                                    <button type="button" className="btn-primary" onClick={() => handleSave(project._id)}>
+                                        Salvează
+                                    </button>
+                                    <button type="button" onClick={handleCancel}>
+                                        Anulează
+                                    </button>
+                                </div>
                             </div>
                         );
                     }
 
-                    // Altfel, afișăm card-ul normal
                     return (
                         <div key={project._id} className="project-item">
-                            <Card
-                                title={project.title}
-                                subtitle={project.tech}
-                                description={project.description || project.tech || 'No description provided.'}
-                            />
-                            <button type="button" onClick={() => handleEdit(project)}>
-                                Editează
-                            </button>
-                            <button type="button" onClick={() => handleDelete(project._id)}>
-                                Delete
-                            </button>
-                            <button type="button" onClick={() => handleToggle(project._id, project.done)}>
-                                Toggle
-                            </button>
+                            <div>
+                                <div className="project-title">{project.title}</div>
+                                <div className="project-tech">{project.tech}</div>
+                            </div>
+                            <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+                                <span className={`badge ${project.done ? 'done' : ''}`}>
+                                    {project.done ? 'Finalizat' : 'În lucru'}
+                                </span>
+                                <button type="button" onClick={() => handleEdit(project)}>
+                                    Editează
+                                </button>
+                                <button type="button" onClick={() => handleToggle(project._id, project.done)}>
+                                    Toggle
+                                </button>
+                                <button type="button" className="btn-danger" onClick={() => handleDelete(project._id)}>
+                                    Șterge
+                                </button>
+                            </div>
                         </div>
                     );
                 })}
+            </div>
 
-            <p>Total: {projects.length}</p>
-            <p>Done: {projects.filter((p) => p.done).length}</p>
-            <p>In progress: {projects.filter((p) => !p.done).length}</p>
+            <div className="stats-grid" style={{ marginTop: '32px' }}>
+                <div className="stat-card primary">
+                    <div className="stat-number">{projects.length}</div>
+                    <div className="stat-label">Total</div>
+                </div>
+                <div className="stat-card">
+                    <div className="stat-number">{projects.filter((p) => p.done).length}</div>
+                    <div className="stat-label">Finalizate</div>
+                </div>
+                <div className="stat-card">
+                    <div className="stat-number">{projects.filter((p) => !p.done).length}</div>
+                    <div className="stat-label">În lucru</div>
+                </div>
+            </div>
         </div>
     );
 }
