@@ -9,7 +9,9 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(cors({
- origin: ['http://localhost:5173', 'https://project-web-2oz8.onrender.com']
+ origin: ['http://localhost:5173',
+     'https://project-web-2oz8.onrender.com',
+    'https://project-web-sigma-lac.vercel.app']
 }));
 
 
