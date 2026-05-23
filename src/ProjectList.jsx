@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 
+const API = 'https://dashboard-api-xxxx.onrender.com';
+
 function ProjectList() {
     const [projects, setProjects] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -17,7 +19,7 @@ function ProjectList() {
     async function handleSubmit(e) {
         e.preventDefault();
         try {
-            const response = await fetch('http://localhost:3000/api/projects', {
+            const response = await fetch(API + '/api/projects', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ title, tech, description }),
@@ -34,7 +36,7 @@ function ProjectList() {
 
     function handleDelete(projectId) {
         if (window.confirm('Sigur doriti sa stergeti acest proiect?')) {
-            fetch('http://localhost:3000/api/projects/' + projectId, { method: 'DELETE' })
+            fetch(API + '/api/projects/' + projectId, { method: 'DELETE' })
                 .then(function (response) {
                     if (!response.ok) throw new Error('Delete failed');
                     setProjects((prev) => prev.filter((p) => p._id !== projectId));
@@ -47,7 +49,7 @@ function ProjectList() {
     }
 
     function handleToggle(id, currentDone) {
-        fetch('http://localhost:3000/api/projects/' + id, {
+        fetch(API + '/api/projects/' + id, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ done: !currentDone }),
@@ -70,7 +72,7 @@ function ProjectList() {
 
     async function handleSave(id) {
         try {
-            const response = await fetch('http://localhost:3000/api/projects/' + id, {
+            const response = await fetch(API + '/api/projects/' + id, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ title: editTitle, tech: editTech }),
@@ -89,7 +91,7 @@ function ProjectList() {
     }
 
     useEffect(function () {
-        fetch('http://localhost:3000/api/projects')
+        fetch(API + '/api/projects')
             .then((res) => res.json())
             .then((data) => {
                 setProjects(data);

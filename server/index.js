@@ -8,8 +8,6 @@ const PORT = process.env.PORT || 3000;
 const Project = require('./models/Project');
 const mongoose = require('mongoose');
 
-const API = 'https://dashboard-api-xxxx.onrender.com';
-
 mongoose.connect(process.env.MONGO_URI)
  .then(function() {
  console.log('Conectat la MongoDB!');
@@ -25,7 +23,7 @@ app.get('/', function(req, res) {
 });
 
 // GET /api/projects - returneaza toate proiectele
-app.get(API + '/api/projects', async function(req, res) {
+app.get('/api/projects', async function(req, res) {
  try {
         const projects = await Project.find();
         res.json(projects);
@@ -34,7 +32,7 @@ app.get(API + '/api/projects', async function(req, res) {
     }
 });
 
-app.get(API + '/api/projects/:id',async function(req, res) {
+app.get('/api/projects/:id',async function(req, res) {
     const id = parseInt(req.params.id);
     const projects = await Project.find();
     const project = projects.find(p => p.id === id)
@@ -44,7 +42,7 @@ app.get(API + '/api/projects/:id',async function(req, res) {
         res.status(404).json({ error: 'Not found' })
 });
 
-app.delete(API + '/api/projects/:id', async function(req, res) {
+app.delete('/api/projects/:id', async function(req, res) {
     const project = await Project.findByIdAndDelete(req.params.id);
     if (!project) {
         res.status(404).json({ error: 'Not found' });
@@ -54,7 +52,7 @@ app.delete(API + '/api/projects/:id', async function(req, res) {
 })
 
 // POST /api/projects - adauga un proiect nou
-app.post(API + '/api/projects', async function(req, res) {
+app.post('/api/projects', async function(req, res) {
  try {
  const newProject = new Project({
  title: req.body.title,
@@ -68,7 +66,7 @@ app.post(API + '/api/projects', async function(req, res) {
  }
 });
 
-app.put(API + '/api/projects/:id', async function(req, res) {
+app.put('/api/projects/:id', async function(req, res) {
     try {
         const updated = await Project.findByIdAndUpdate(
         req.params.id,
@@ -82,7 +80,7 @@ app.put(API + '/api/projects/:id', async function(req, res) {
     }
 });
 
-app.get(API + '/api/stats', async function(req, res) {
+app.get('/api/stats', async function(req, res) {
     try {
     const total = await Project.countDocuments();
     const done = await Project.countDocuments({ done: true });
