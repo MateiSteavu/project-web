@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 
+const API = 'https://project-web-2oz8.onrender.com';
+
 function Home() {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(function () {
-    fetch('http://localhost:3000/api/stats')
+    fetch(API+'/api/stats')
       .then(function (res) {
         if (!res.ok) throw new Error('Eroare la fetch');
         return res.json();
