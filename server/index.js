@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(cors({
  origin: ['http://localhost:5173',
      'https://project-web-2oz8.onrender.com',
-    'https://project-web-omega-ten.vercel.app']
+    'https://project-web-mocha.vercel.app/']
 }));
 
 
