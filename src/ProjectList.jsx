@@ -181,7 +181,6 @@ function ProjectList() {
                             <div>
                                 <div className="project-title">{project.title}</div>
                                 <div className="project-tech">{project.tech}</div>
-                                <div className="project-description">{project.description}</div>
                             </div>
                             <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
                                 <span className={`badge ${project.done ? 'done' : ''}`}>
