@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const API = 'https://project-web-2oz8.onrender.com/';
+const API = 'https://project-web-2oz8.onrender.com';
 
 function ProjectList() {
     const [projects, setProjects] = useState([]);
