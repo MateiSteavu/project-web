@@ -8,7 +8,10 @@ const Project = require('./models/Project');
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+ origin: ['http://localhost:5173', 'https://project-web-2oz8.onrender.com']
+}));
+
 
 mongoose.connect(process.env.MONGO_URI)
  .then(function() {
