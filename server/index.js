@@ -1,14 +1,14 @@
+require('dotenv').config()
 const express = require('express');
 const app = express();
 const cors = require('cors');
 app.use(cors());
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 const Project = require('./models/Project');
-
-
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/dashboard')
+
+mongoose.connect(process.env.MONGO_URI)
  .then(function() {
  console.log('Conectat la MongoDB!');
  })
